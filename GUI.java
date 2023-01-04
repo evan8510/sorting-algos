@@ -58,7 +58,7 @@ public class GUI extends Canvas {
 
         g.setColor(Color.BLACK);
         g.clearRect(0, 0, WIDTH, HEIGHT);
-        //g.drawString("Time Passed: " + (System.currentTimeMillis()-t)+ "ms", 10, 10);
+        g.drawString("Time Passed: " + (System.currentTimeMillis()-t)+ "ms", 10, 10);
         for(int i=0; i<b.length;i++){
             b[i].render(g);
             //g.fillRect(i*10, 510-b[i].getLength(), 8, b[i].getLength());
@@ -69,11 +69,14 @@ public class GUI extends Canvas {
 
     void run(int alg){
         // allow user to select sorting algorithm, add mouse pointer intg. later
-        if(alg==1)
+        if(alg==1){
+            t = System.currentTimeMillis();
             selectionSort(b);
+        }
         else if(alg==0)
             bubbleSort(b);
         else if(alg==2){
+            t = System.currentTimeMillis();
             render();
             b = mergeSort(b);
         }
@@ -132,7 +135,6 @@ public class GUI extends Canvas {
                 }
             }
         }
-        //g.drawString("Time Passed: " + (System.currentTimeMillis()-t)+ "ms", 10, 10);
 
         g.dispose();
         bs.show();

@@ -2,6 +2,7 @@ import java.awt.Canvas;
 import java.awt.Graphics;
 import java.awt.Color;
 import java.awt.image.BufferStrategy;
+import java.util.Scanner;
 
 /*
  * Change to render off of Bar rather than bar.length
@@ -14,10 +15,12 @@ public class GUI extends Canvas {
     long t = System.currentTimeMillis();
     BufferStrategy bs;
     Graphics g;
-    public GUI(){
+    public GUI(int alg){
         Window w = new Window(1000, 600, this);
-
         // init bars
+        while(!this.hasFocus()){
+
+        }
         for(int i =0; i <100; i++){
             int r =(int)(Math.random()*400);
             b[i] = new Bar(i*10, 510-r, 8, r);
@@ -31,10 +34,18 @@ public class GUI extends Canvas {
         g = bs.getDrawGraphics();
 
             render(); // render the bars fully randomized
-            run(); // allow user to select sorting algorithm and run it
+            run(alg); // allow user to select sorting algorithm and run it
     }
     public static void main(String[] args){
-        new GUI();
+        Scanner scanner = new Scanner(System.in);
+        int alg = -1;
+        while(!(alg == 0 || alg ==1 || alg ==2)){
+            System.out.print("Enter 0 for bubble sort, 1 for selection sort,\nor 2 for merge sort: ");
+            alg = Integer.parseInt(scanner.nextLine());
+        }
+        scanner.close();
+        System.out.println(alg);
+        new GUI(alg);
     }
 
     void render(){
@@ -56,14 +67,13 @@ public class GUI extends Canvas {
         bs.show();
     }
 
-    void run(){
+    void run(int alg){
         // allow user to select sorting algorithm, add mouse pointer intg. later
-        int x =0;
-        if(x==1)
+        if(alg==1)
             selectionSort(b);
-        else if(x==0)
+        else if(alg==0)
             bubbleSort(b);
-        else if(x==2){
+        else if(alg==2){
             render();
             b = mergeSort(b);
         }
